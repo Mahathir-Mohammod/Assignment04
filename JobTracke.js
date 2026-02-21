@@ -118,6 +118,13 @@ function AllJobs(filter = 'all') {
     updateDashboard();
 }
 
+function updateStatus(id, newStatus) {
+    const job = jobs.find(j => j.id === id);
+    job.status = (job.status === newStatus) ? 'all' : newStatus;
+    const activeTabText = document.querySelector('.tab-active').innerText.toLowerCase();
+    AllJobs(activeTabText);
+}
+
 
 
 AllJobs();
