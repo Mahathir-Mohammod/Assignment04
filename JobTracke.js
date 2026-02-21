@@ -72,6 +72,17 @@ function AllJobs(filter = 'all') {
         return;
     }
 
+    filtered.forEach(job => {
+        const isInterview = job.status === 'interview';
+        const isRejected = job.status === 'rejected';
+        
+        let borderClass = "border-gray-100";
+        if (isInterview) borderClass = "border-green-500 ring-1 ring-green-500";
+        if (isRejected) borderClass = "border-red-500 ring-1 ring-red-500";
+        ;
 
+        container.appendChild(card);
+    });
+    updateDashboard();
 }
 
