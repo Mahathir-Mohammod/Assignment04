@@ -56,3 +56,22 @@ let jobs = [
         description: "Lead our frontend team in building modern web applications using React and Tailwind CSS. Focus on performance and accessibility.", 
         status: "all" }
 ];
+const container = document.getElementById('job-container');
+function AllJobs(filter = 'all') {
+    const filtered = filter === 'all' ? jobs : jobs.filter(j => j.status === filter);
+    container.innerHTML = '';
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-20 bg-white rounded-xl border border-gray-100 shadow-sm w-full">
+                <img src="Image/jobs.png" class="w-24 mb-4 opacity-20" alt="No jobs">
+                <h3 class="text-xl font-bold text-gray-700">No jobs available</h3>
+                <p class="text-gray-400">Check back later for new opportunities</p>
+            </div>`;
+        updateDashboard(); 
+        return;
+    }
+
+
+}
+
