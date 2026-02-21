@@ -125,6 +125,11 @@ function updateStatus(id, newStatus) {
     AllJobs(activeTabText);
 }
 
+function deleteJob(id) {
+    jobs = jobs.filter(j => j.id !== id);
+    const activeTabText = document.querySelector('.tab-active').innerText.toLowerCase();
+    AllJobs(activeTabText);
+}
 
 
 AllJobs();
