@@ -47,10 +47,14 @@
 
             <h3 class="text-xl font-bold">Available Jobs</h3>
 
-            <span class="text-gray-500"><span id="job-count-label">8</span> of jobs</span>
+            <span class="text-gray-500"><span id="job-count-label">8</span> of 8 jobs</span>
 
         </div>
-        
+        <div role="tablist" class="tabs tabs-boxed mb-6 bg-transparent gap-2">
+            <a role="tab" class="tab tab-active" onclick="filterJobs('all', this)">All</a>
+            <a role="tab" class="tab" onclick="filterJobs('interview', this)">Interview</a>
+            <a role="tab" class="tab" onclick="filterJobs('rejected', this)">Rejected</a>
+        </div>
 
         <div id="job-container" class="space-y-4"></div>
 
