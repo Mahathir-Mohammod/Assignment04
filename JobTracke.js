@@ -77,8 +77,6 @@ function AllJobs(filter = 'all') {
         const isRejected = job.status === 'rejected';
         
         let borderClass = "border-gray-100";
-        if (isInterview) borderClass = "border-green-500 ring-1 ring-green-500";
-        if (isRejected) borderClass = "border-red-500 ring-1 ring-red-500";
 
         const card = document.createElement('div');
         card.className = `bg-white p-6 rounded-lg border shadow-sm flex flex-col gap-2 relative transition-all duration-300 ${borderClass}`;
@@ -140,6 +138,13 @@ function updateDashboard() {
     document.getElementById('interview-count').innerText = interviewCount;
     document.getElementById('rejected-count').innerText = rejectedCount;
 
+    const activeTab = document.querySelector('.tab-active').innerText.toLowerCase();
+    let currentViewCount = totalCount;
+    if (activeTab === 'interview') currentViewCount = interviewCount;
+    if (activeTab === 'rejected') currentViewCount = rejectedCount;
+    
+    document.getElementById('job-count-label').innerText = `${currentViewCount}`;
 }
+
 
 AllJobs();
