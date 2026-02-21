@@ -131,5 +131,15 @@ function deleteJob(id) {
     AllJobs(activeTabText);
 }
 
+function updateDashboard() {
+    const totalCount = jobs.length;
+    const interviewCount = jobs.filter(j => j.status === 'interview').length;
+    const rejectedCount = jobs.filter(j => j.status === 'rejected').length;
+
+    document.getElementById('total-count').innerText = totalCount;
+    document.getElementById('interview-count').innerText = interviewCount;
+    document.getElementById('rejected-count').innerText = rejectedCount;
+
+}
 
 AllJobs();
