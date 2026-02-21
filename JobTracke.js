@@ -79,10 +79,45 @@ function AllJobs(filter = 'all') {
         let borderClass = "border-gray-100";
         if (isInterview) borderClass = "border-green-500 ring-1 ring-green-500";
         if (isRejected) borderClass = "border-red-500 ring-1 ring-red-500";
-        ;
+
+        const card = document.createElement('div');
+        card.className = `bg-white p-6 rounded-lg border shadow-sm flex flex-col gap-2 relative transition-all duration-300 ${borderClass}`;
+        
+        card.innerHTML = `
+            <button onclick="deleteJob(${job.id})" class="absolute top-4 right-4 text-gray-300 hover:text-red-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <h4 class="font-bold text-lg text-gray-800">${job.company}</h4>
+            <p class="text-md font-semibold text-gray-600">${job.role}</p>
+            <p class="text-sm text-gray-400 font-medium">${job.loc} - ${job.type} - ${job.salary}</p>
+            
+            <div class="my-2 h-6">
+                <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${isInterview ? 'bg-green-500 text-white' : isRejected ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-400'}">
+                    ${job.status === 'all' ? 'Not Applied' : job.status}
+                </span>
+            </div>
+
+            <p class="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">${job.description}</p>
+
+            <div class="flex gap-3 mt-auto">
+                <button onclick="updateStatus(${job.id}, 'interview')" 
+                    class="btn btn-sm flex-1 font-bold ${isInterview ? 'btn-success' : 'btn-outline btn-success'}">
+                    Interview
+                </button>
+                <button onclick="updateStatus(${job.id}, 'rejected')" 
+                    class="btn btn-sm flex-1 font-bold ${isRejected ? 'btn-error' : 'btn-outline btn-error'}">
+                    Rejected
+                </button>
+            </div>`;
 
         container.appendChild(card);
     });
     updateDashboard();
 }
 
+
+
+AllJobs();
