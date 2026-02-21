@@ -131,7 +131,7 @@ function deleteJob(id) {
 
 function updateDashboard() {
     const totalCount = jobs.length;
-    const interviewCount = jobs.filter(j => j.status === 'interview').length;
+    const interviewCount = jobs.filter(job => job.status === 'interview').length;
     const rejectedCount = jobs.filter(j => j.status === 'rejected').length;
 
     document.getElementById('total-count').innerText = totalCount;
@@ -146,5 +146,10 @@ function updateDashboard() {
     document.getElementById('job-count-label').innerText = `${currentViewCount}`;
 }
 
+window.filterJobs = function(type, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
+    el.classList.add('tab-active');
+    AllJobs(type);
+};
 
 AllJobs();
