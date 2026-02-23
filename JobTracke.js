@@ -1,155 +1,160 @@
-let jobs = [
-    { id: 1, company: "Mobile First Corp", 
-        role: "React Native Developer", 
+const jobsData = [
+    { id: 1, 
+        company: "Mobile First Corp", 
+        position: "React Native Developer", 
         loc: "Remote", 
         type: "Full-time", 
-        salary: "$130k - $175k", 
-        description: "Build cross-platform mobile applications using React Native and Redux. Focus on high-performance UI and fluid animations.", 
-        status: "all" },
-    { id: 2, company: "WebFlow Agency", 
-        role: "Web Designer & Developer", 
-        loc: "Los Angeles, CA", 
+        salary: "$130k-$175k", 
+        desc: "Build cross-platform mobile apps." 
+    },
+    { id: 2, 
+        company: "WebFlow Agency", 
+        position: "Web Designer", 
+        loc: "LA", 
         type: "Part-time", 
-        salary: "$80k - $120k", 
-        description: "Create stunning web experiences for high-profile clients. Must have excellent UX/UI experience with Webflow and JavaScript.", 
-        status: "all" },
+        salary: "$80k-$120k", 
+        desc: "High-profile client websites." 
+    },
     { id: 3, company: "DataViz Solutions", 
-        role: "Data Visualization Specialist", 
-        loc: "Austin, TX", 
+        position: "Data Specialist", 
+        loc: "Austin", 
         type: "Full-time", 
-        salary: "$90k - $120k", 
-        description: "Transform complex datasets into interactive visual stories. Required skills: D3.js, React, and strong analytical thinking.", 
-        status: "all" },
-    { id: 4, company: "GreenField Inc", 
-        role: "Backend Developer", 
+        salary: "$90k-$120k", 
+        desc: "Visual data storytelling." 
+    },
+    { id: 4, 
+        company: "GreenField Inc", 
+        position: "Backend Dev", 
         loc: "Remote", 
         type: "Full-time", 
-        salary: "$110k - $140k", 
-        description: "Design and maintain scalable backend systems using Node.js and AWS. Focus on performance and database optimization.", 
-        status: "all" },
-    { id: 5, company: "Innovative Labs", 
-        role: "UI/UX Designer", 
-        loc: "Portland, OR", 
+        salary: "$110k-$140k", 
+        desc: "Scalable Node.js systems." 
+    },
+    { id: 5, 
+        company: "Innovative Labs", 
+        position: "UI Designer", 
+        loc: "Portland", 
         type: "Full-time", 
-        salary: "$85k - $110k", 
-        description: "Create beautiful and functional user interfaces for our mobile products. Strong focus on user research and prototyping.", 
-        status: "all" },
-    { id: 6, company: "MegaCorp Solutions", 
-        role: "Java Software Developer", 
-        loc: "New York, NY", 
+        salary: "$85k-$110k", 
+        desc: "Mobile product interfaces." 
+    },
+    { id: 6, 
+        company: "MegaCorp", 
+        position: "Java Developer", 
+        loc: "NY", 
         type: "Part-time", 
-        salary: "$100k - $130k", 
-        description: "Build enterprise-grade software with Java Spring Boot. Collaborate with cross-functional teams in an agile environment.", 
-        status: "all" },
-    { id: 7, company: "StartupXYZ", 
-        role: "Full Stack Engineer", 
+        salary: "$100k-$130k", 
+        desc: "Enterprise Java software."
+    },
+    { id: 7, 
+        company: "StartupXYZ", 
+        position: "Full Stack", 
         loc: "Remote", 
         type: "Full-time", 
-        salary: "$120k - $150k", 
-        description: "Join our growing startup and help us build the next big platform. Experience with React, Node.js, and MongoDB required.", 
-        status: "all" },
-    { id: 8, company: "TechCorp Industries", 
-        role: "Senior Frontend Developer", 
-        loc: "San Francisco, CA", 
+        salary: "$120k-$150k", 
+        desc: "Building next-gen platforms." 
+    },
+    { id: 8, 
+        company: "TechCorp", 
+        position: "Frontend Lead", 
+        loc: "SF", 
         type: "Full-time", 
-        salary: "$140k - $170k", 
-        description: "Lead our frontend team in building modern web applications using React and Tailwind CSS. Focus on performance and accessibility.", 
-        status: "all" }
+        salary: "$140k-$170k", 
+        desc: "Modern React apps." 
+    }
 ];
 const container = document.getElementById('job-container');
-function AllJobs(filter = 'all') {
-    const filtered = filter === 'all' ? jobs : jobs.filter(j => j.status === filter);
-    container.innerHTML = '';
 
-    if (filtered.length === 0) {
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center py-20 bg-white rounded-xl border border-gray-100 shadow-sm w-full">
-                <img src="Image/jobs.png" class="w-24 mb-4 opacity-20" alt="No jobs">
-                <h3 class="text-xl font-bold text-gray-700">No jobs available</h3>
-                <p class="text-gray-400">Check back later for new opportunities</p>
-            </div>`;
-        updateDashboard(); 
-        return;
-    }
-
-    filtered.forEach(job => {
-        const isInterview = job.status === 'interview';
-        const isRejected = job.status === 'rejected';
-        
-        let borderClass = "border-gray-100";
-
+function AllJobs() {
+    jobsData.forEach(job => {
         const card = document.createElement('div');
-        card.className = `bg-white p-6 rounded-lg border shadow-sm flex flex-col gap-2 relative transition-all duration-300 ${borderClass}`;
-        
+        card.id = `job-${job.id}`;
+        card.className = "job-card bg-white p-6 rounded-lg border border-gray-100 shadow-sm relative flex flex-col gap-2";
+        card.setAttribute('data-status', 'all');
+
         card.innerHTML = `
-            <button onclick="deleteJob(${job.id})" class="absolute top-4 right-4 text-gray-300 hover:text-red-500 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-            
-            <h4 class="font-bold text-lg text-gray-800">${job.company}</h4>
-            <p class="text-md font-semibold text-gray-600">${job.role}</p>
-            <p class="text-sm text-gray-400 font-medium">${job.loc} - ${job.type} - ${job.salary}</p>
-            
-            <div class="my-2 h-6">
-                <span class="px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${isInterview ? 'bg-green-500 text-white' : isRejected ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-400'}">
-                    ${job.status === 'all' ? 'Not Applied' : job.status}
-                </span>
+            <button onclick="deleteCard(${job.id})" class="absolute top-4 right-4 text-gray-300 hover:text-red-500">✕</button>
+            <h4 class="font-bold text-lg">${job.company}</h4>
+            <p class="text-sm font-semibold text-gray-600">${job.position}</p>
+            <p class="text-xs text-gray-400 uppercase font-bold">${job.loc} • ${job.type} • ${job.salary}</p>
+            <div class="badge-area my-2 h-6">
+                <span class="badge bg-gray-100 text-gray-400 border-none text-[10px] font-bold">NOT APPLIED</span>
             </div>
-
-            <p class="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-2">${job.description}</p>
-
-            <div class="flex gap-3 mt-auto">
-                <button onclick="updateStatus(${job.id}, 'interview')" 
-                    class="btn btn-sm flex-1 font-bold ${isInterview ? 'btn-success' : 'btn-outline btn-success'}">
-                    Interview
-                </button>
-                <button onclick="updateStatus(${job.id}, 'rejected')" 
-                    class="btn btn-sm flex-1 font-bold ${isRejected ? 'btn-error' : 'btn-outline btn-error'}">
-                    Rejected
-                </button>
+            <p class="text-sm text-gray-500 mb-4">${job.desc}</p>
+            <div class="flex gap-2">
+                <button onclick="setStatus(${job.id}, 'interview')" class="btn-int btn btn-sm btn-outline btn-success flex-1">Interview</button>
+                <button onclick="setStatus(${job.id}, 'rejected')" class="btn-rej btn btn-sm btn-outline btn-error flex-1">Rejected</button>
             </div>`;
-
         container.appendChild(card);
     });
-    updateDashboard();
+    updateUI();
 }
 
-function updateStatus(id, newStatus) {
-    const job = jobs.find(j => j.id === id);
-    job.status = (job.status === newStatus) ? 'all' : newStatus;
-    const activeTabText = document.querySelector('.tab-active').innerText.toLowerCase();
-    AllJobs(activeTabText);
-}
-
-function deleteJob(id) {
-    jobs = jobs.filter(j => j.id !== id);
-    const activeTabText = document.querySelector('.tab-active').innerText.toLowerCase();
-    AllJobs(activeTabText);
-}
-
-function updateDashboard() {
-    const totalCount = jobs.length;
-    const interviewCount = jobs.filter(job => job.status === 'interview').length;
-    const rejectedCount = jobs.filter(j => j.status === 'rejected').length;
-
-    document.getElementById('total-count').innerText = totalCount;
-    document.getElementById('interview-count').innerText = interviewCount;
-    document.getElementById('rejected-count').innerText = rejectedCount;
-
-    const activeTab = document.querySelector('.tab-active').innerText.toLowerCase();
-    let currentViewCount = totalCount;
-    if (activeTab === 'interview') currentViewCount = interviewCount;
-    if (activeTab === 'rejected') currentViewCount = rejectedCount;
+window.setStatus = function(id, status) {
+    const card = document.getElementById(`job-${id}`);
+    const currentStatus = card.getAttribute('data-status');
+    const badgeArea = card.querySelector('.badge-area');
     
-    document.getElementById('job-count-label').innerText = `${currentViewCount}`;
+// toggle
+let newStatus;
+if (currentStatus === status) {
+    newStatus = 'all';
+} else {
+    newStatus = status;
 }
+card.setAttribute('data-status', newStatus);
+    card.classList.remove();
+    if (newStatus === 'interview') {
+        card.classList.add();
+        badgeArea.innerHTML = `<span class="badge bg-green-500 text-white border-none text-[10px] font-bold">INTERVIEW</span>`;
+    } else if (newStatus === 'rejected') {
+        card.classList.add();
+        badgeArea.innerHTML = `<span class="badge bg-red-500 text-white border-none text-[10px] font-bold">REJECTED</span>`;
+    } else {
+        badgeArea.innerHTML = `<span class="badge bg-gray-100 text-gray-400 border-none text-[10px] font-bold">NOT APPLIED</span>`;
+    }
+    const activeTab = document.querySelector('.tab-active').innerText.toLowerCase();
+    filterJobs(activeTab, document.querySelector('.tab-active'));
+};
+window.filterJobs = function(type, element) {
 
-window.filterJobs = function(type, el) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
-    el.classList.add('tab-active');
-    AllJobs(type);
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('tab-active'));
+    element.classList.add('tab-active');
+
+    const cards = document.querySelectorAll('.job-card');
+    cards.forEach(card => {
+        const status = card.getAttribute('data-status');
+
+        if (type === 'all' || status === type) {
+            card.classList.remove('card-hidden');
+        } else {
+            card.classList.add('card-hidden');
+        }
+    });
+
+    updateUI();
+};
+window.deleteCard = function(id) {
+    const card = document.getElementById(`job-${id}`);
+    card.remove();
+    updateUI();
 };
 
+function updateUI() {
+    const allCards = Array.from(document.querySelectorAll('.job-card'));
+    const visibleCards = allCards.filter(c => !c.classList.contains('card-hidden'));
+    
+    document.getElementById('total-count').innerText = allCards.length;
+    document.getElementById('interview-count').innerText = allCards.filter(c => c.getAttribute('data-status') === 'interview').length;
+    document.getElementById('rejected-count').innerText = allCards.filter(c => c.getAttribute('data-status') === 'rejected').length;
+
+    document.getElementById('job-count-label').innerText = `${visibleCards.length} jobs`;
+
+    const emptyState = document.getElementById('empty-state');
+    if (visibleCards.length === 0) {
+        emptyState.classList.remove('hidden');
+    } else {
+        emptyState.classList.add('hidden');
+    }
+}
 AllJobs();
