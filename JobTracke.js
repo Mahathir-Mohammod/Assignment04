@@ -134,6 +134,7 @@ window.filterJobs = function(type, element) {
 
     updateUI();
 };
+
 window.deleteCard = function(id) {
     const card = document.getElementById(`job-${id}`);
     card.remove();

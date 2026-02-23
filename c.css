@@ -1,17 +1,20 @@
 *{
     font-family: "Geist", sans-serif;
 }
-rd-hidden {
+.card-hidden {
     display: none !important;
 }
+
 .job-card {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .tab {
     transition: background-color 0.2s ease;
     border-radius: 8px !important;
 }
+
 .tab-active {
-    background-color: #2563eb !important;
+    background-color: #2563eb !important; 
     color: white !important;
 }
